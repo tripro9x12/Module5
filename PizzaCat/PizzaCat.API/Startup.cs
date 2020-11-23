@@ -33,6 +33,8 @@ namespace PizzaCat.API
             services.AddSwaggerGen();
             services.AddScoped<ISectorsRepository, SectorsRepository>();
             services.AddScoped<ISectorsService, SectorsService>();
+            services.AddScoped<ISizeRepository, SizeRepositoty>();
+            services.AddScoped<ISizeService, SizeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
