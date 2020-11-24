@@ -35,6 +35,10 @@ namespace PizzaCat.API
             services.AddScoped<ISectorsService, SectorsService>();
             services.AddScoped<ISizeRepository, SizeRepositoty>();
             services.AddScoped<ISizeService, SizeService>();
+            services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IUnitPriceRepository, UnitPriceRepository>();
+            services.AddScoped<IUnitPriceService, UnitPriceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
