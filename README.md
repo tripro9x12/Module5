@@ -1,4 +1,4 @@
-🚀 Tên dự án: Pizza Cat
+🚀 Tên dự án: Pizza Cat (Order Pizza Online)
 
 👤 Học viên: Huỳnh Như Trí - Học viên CodeGym Huế
 
