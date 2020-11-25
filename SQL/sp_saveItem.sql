@@ -1,12 +1,13 @@
 ﻿USE [PizzaDb]
 GO
 
-/****** Object:  StoredProcedure [dbo].[sp_SaveItem]    Script Date: 25/11/2020 8:44:36 SA ******/
+/****** Object:  StoredProcedure [dbo].[sp_SaveItem]    Script Date: 25/11/2020 2:48:50 CH ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 
 -- =============================================
@@ -20,7 +21,7 @@ ALTER PROCEDURE [dbo].[sp_SaveItem]
 	@SectorsId	INT,
 	@Ingredient NVARCHAR(200),
 	@Discount	INT,
-	@ImageItem	NCHAR(200)
+	@ImageItem	VARCHAR(200)
 
 AS
 BEGIN
@@ -89,6 +90,5 @@ BEGIN
 	END CATCH
 END
 GO
-
 
 
