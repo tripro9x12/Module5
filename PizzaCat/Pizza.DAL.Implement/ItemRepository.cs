@@ -12,6 +12,39 @@ namespace Pizza.DAL.Implement
 {
     public class ItemRepository : BaseReposetory, IItemRepository
     {
+        public async Task<DeleteItemRes> Delete(int ItemId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@ItemId", ItemId);
+            return await SqlMapper.QueryFirstOrDefaultAsync<DeleteItemRes>(cnn: connection,
+                                                                            sql: "sp_DeleteItemById",
+                                                                            param: parameters,
+                                                                            commandType: CommandType.StoredProcedure
+                                                                            );
+        }
+
+        public async Task<ItemView> Get(int ItemId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add(@"ItemId", ItemId);
+            return await SqlMapper.QueryFirstOrDefaultAsync<ItemView>(cnn: connection,
+                                                                      sql: "sp_GetItemById",
+                                                                      param: parameters,
+                                                                      commandType: CommandType.StoredProcedure
+                                                                      );
+        }
+
+        public async Task<IEnumerable<ItemView>> GetItemBySectorsId(int SectorsId)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@SectorsId", SectorsId);
+            return await SqlMapper.QueryAsync<ItemView>(cnn: connection,
+                                                        sql: "sp_GetItemBySectorsId",
+                                                        param: parameters,
+                                                        commandType: CommandType.StoredProcedure
+                                                        );
+        }
+
         public async Task<SaveItemRes> Save(SaveItemReq request)
         {
             var result = new SaveItemRes()

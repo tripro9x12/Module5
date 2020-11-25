@@ -1,6 +1,7 @@
 USE [PizzaDb]
 GO
 
+/****** Object:  StoredProcedure [dbo].[sp_DeleteSizeById]    Script Date: 25/11/2020 9:55:15 SA ******/
 SET ANSI_NULLS ON
 GO
 
@@ -9,10 +10,7 @@ GO
 
 
 
-
-
-
-CREATE PROCEDURE [dbo].[sp_DeleteSizeById]
+ALTER PROCEDURE [dbo].[sp_DeleteSizeById]
 @SizeId INT 
 As
 BEGIN
@@ -25,7 +23,7 @@ BEGIN
 
 	END TRY
 	BEGIN CATCH
-		SELECT @SizeId AS SectorsId, @Message AS [Message]
+		SELECT @SizeId AS SizeId, @Message AS [Message]
 	END CATCH
 END
 GO

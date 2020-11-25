@@ -13,6 +13,6 @@ namespace Pizza.Domain.Response.Item
         public string SectorsName { get; set; }
         public int Discount { get; set; }
         public string ImageItem { get; set; }
-        public List<UnitPriceByItemIdView> UnitPrices { get; set; }
+        public IEnumerable<UnitPriceByItemIdView> UnitPrices { get; set; }
     }
 }

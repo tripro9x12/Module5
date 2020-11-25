@@ -10,5 +10,8 @@ namespace Pizza.DAL.Interface
     public interface IItemRepository
     {
         Task<SaveItemRes> Save(SaveItemReq request);
+        Task<ItemView> Get(int ItemId);
+        Task<IEnumerable<ItemView>> GetItemBySectorsId(int SectorsId);
+        Task<DeleteItemRes> Delete(int ItemId);
     }
 }

@@ -1,5 +1,7 @@
 ﻿USE [PizzaDb]
 GO
+
+/****** Object:  StoredProcedure [dbo].[sp_SaveItem]    Script Date: 25/11/2020 8:44:36 SA ******/
 SET ANSI_NULLS ON
 GO
 
@@ -7,17 +9,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-
-
-
-
-
 -- =============================================
 -- Author:		Trí Huỳnh
 -- Create date: 24/11/2020
 -- Description:	Create or update Item
 -- =============================================
-CREATE PROCEDURE [dbo].[sp_SaveItem] 
+ALTER PROCEDURE [dbo].[sp_SaveItem] 
 	@ItemId		INT,
 	@ItemName	NVARCHAR(100),
 	@SectorsId	INT,
@@ -32,23 +29,30 @@ BEGIN
 		-- Create
 		--IF(@ItemId IS NULL OR @ItemId = 0)
 		IF(ISNULL(@ItemId,0) = 0)
-		BEGIN						
-			INSERT INTO [dbo].[Item]
-					   ([ItemName]
-					   ,[SectorsId]
-					   ,[Ingredient]
-					   ,[Discount]
-					   ,[ImageItem]
-					   )
-			VALUES(@ItemName
-				  ,@SectorsId
-				  ,@Ingredient
-				  ,@Discount
-				  ,@ImageItem
-				  )
+		BEGIN
+			IF(NOT EXISTS(SELECT * FROM Item WHERE LOWER(RTRIM(LTRIM(ItemName))) = LOWER(RTRIM(LTRIM(@ItemName)))))
+			BEGIN
+				INSERT INTO [dbo].[Item]
+						   ([ItemName]
+						   ,[SectorsId]
+						   ,[Ingredient]
+						   ,[Discount]
+						   ,[ImageItem]
+						   )
+				VALUES(@ItemName
+					  ,@SectorsId
+					  ,@Ingredient
+					  ,@Discount
+					  ,@ImageItem
+					  )
 					
-			SET @Message = 'Size has been created success'
-			SET @ItemId = SCOPE_IDENTITY()
+				SET @Message = 'Item has been created success'
+				SET @ItemId = SCOPE_IDENTITY()
+			END
+			ELSE
+			BEGIN
+				SET @Message = 'Item Name is used'
+			END
 
 		END
 		ELSE --Update
@@ -58,18 +62,25 @@ BEGIN
 				SET @Message = 'Item Id not found'
 			END
 			ELSE
-			BEGIN
-				UPDATE [dbo].[Item]
-				   SET [ItemName] = @ItemName
-					  ,[SectorsId] = @SectorsId
-					  ,[Ingredient] = @Ingredient
-					  ,[Discount] = @Discount
-					  ,[ImageItem] = @ImageItem
-				   WHERE ItemId = @ItemId
+				IF(NOT EXISTS (SELECT TOP(1) * FROM [dbo].[Item] 
+								   WHERE ItemId != @ItemId AND
+								   LOWER(RTRIM(LTRIM(ItemName))) = LOWER(RTRIM(LTRIM(@ItemName)))))
+				BEGIN
+					UPDATE [dbo].[Item]
+					   SET [ItemName] = @ItemName
+						  ,[SectorsId] = @SectorsId
+						  ,[Ingredient] = @Ingredient
+						  ,[Discount] = @Discount
+						  ,[ImageItem] = @ImageItem
+					   WHERE ItemId = @ItemId
 
-					SET @Message = 'ItemId has been updated success'
+						SET @Message = 'ItemId has been updated success'
 				
-			END
+				END
+				ELSE
+				BEGIN
+					SET @Message = 'Item Name is used'
+				END
 		END
 		SELECT @Message AS [Message], @ItemId AS ItemId
 	END TRY
@@ -78,5 +89,6 @@ BEGIN
 	END CATCH
 END
 GO
+
 
 

@@ -7,6 +7,6 @@ namespace Pizza.Domain.Response.Item
     public class Items
     {
         public string SectorsName { get; set; }
-        public List<ItemView> ListItems { get; set; }
+        public IEnumerable<ItemView> ListItems { get; set; }
     }
 }

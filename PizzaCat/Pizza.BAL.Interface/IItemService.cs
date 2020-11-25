@@ -10,5 +10,8 @@ namespace Pizza.BAL.Interface
     public interface IItemService
     {
         Task<SaveItemRes> Save(SaveItemReq request);
+        Task<ItemView> Get(int ItemId);
+        Task<Items> GetItemBySectorsId(int SectorsId);
+        Task<DeleteItemRes> Delete(int ItemId);
     }
 }
